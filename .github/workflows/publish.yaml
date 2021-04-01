@@ -11,8 +11,6 @@ jobs:
       new_version: ${{steps.save-version.outputs.ver-number}}
     steps:
       - uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.REPO_SCOPED_TOKEN }}
       - name: Fetch release version
         run: |
           curl -sL https://api.github.com/repos/devicons/devicon/releases/latest | \
