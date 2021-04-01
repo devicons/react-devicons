@@ -12,10 +12,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Fetch release version
-        run: echo ::set-output name=ver-number::$(curl -sL https://api.github.com/repos/devicons/devicon/releases/latest | jq -r ".tag_name")
+        run: echo ::set-output name=ver-number::$(curl -sL https://api.github.com/repos/devicons/devicon/releases/latest | jq -r ".tag_name" | echo)
       - name: Check for newest version
         id: git-check
-        run: echo ::set-output name=new-ver::$([$(curl -sL https://api.github.com/repos/maltejur/react-devicons/releases/latest | jq -r ".tag_name") = $(cat devicon-latest.txt) ] && echo "true" || echo "false" )
+        run: echo ::set-output name=new-ver::$([$(curl -sL https://api.github.com/repos/maltejur/react-devicons/releases/latest | jq -r ".tag_name") = ${{steps.save-version.outputs.ver-number}} ] && echo "true" || echo "false" )
       - name: Save new version number
         id: save-version
         run: echo ::set-output name=ver-number::$(cat devicon-latest.txt)
