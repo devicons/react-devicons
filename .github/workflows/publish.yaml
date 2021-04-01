@@ -7,22 +7,20 @@ jobs:
   check_version:
     runs-on: ubuntu-latest
     outputs:
-      is_new_version: ${{steps.git-check.outputs.modified}}
+      is_new_version: ${{steps.git-check.outputs.new-ver}}
       new_version: ${{steps.save-version.outputs.ver-number}}
     steps:
       - uses: actions/checkout@v2
       - name: Fetch release version
-        run: |
-          curl -sL https://api.github.com/repos/devicons/devicon/releases/latest | \
-          jq -r ".tag_name" > devicon-latest.txt
-      - name: Check for modified files
+        run: echo ::set-output name=ver-number::$(curl -sL https://api.github.com/repos/devicons/devicon/releases/latest | jq -r ".tag_name")
+      - name: Check for newest version
         id: git-check
-        run: echo ::set-output name=modified::$([ -z "`git status --porcelain`" ] && echo "false" || echo "true")
+        run: echo ::set-output name=new-ver::$([$(curl -sL https://api.github.com/repos/maltejur/react-devicons/releases/latest | jq -r ".tag_name") = $(cat devicon-latest.txt) ] && echo "true" || echo "false" )
       - name: Save new version number
         id: save-version
-        run: echo ::set-output name=ver-number::$(cat cat devicon-latest.txt)
+        run: echo ::set-output name=ver-number::$(cat devicon-latest.txt)
       - run: echo ${{steps.git-check.outputs.modified}} && echo ${{steps.save-version.outputs.ver-number}}
-  release:
+  publish:
     needs: check_version
     if: needs.jobs.outputs.is_new_version == 'true'
     runs-on: ubuntu-latest
