@@ -2,6 +2,7 @@ name: Publish on NPM
 on:
   schedule:
     - cron: "0 10 * * *"
+  push:
 jobs:
   check_version:
     runs-on: ubuntu-latest
