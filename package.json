@@ -3,7 +3,7 @@
   "license": "MIT",
   "scripts": {
     "build": "ts-node index.ts && babel tmp/dist --out-dir dist --copy-files",
-    "release": "yarn build && yarn --cwd dist publish"
+    "release": "ts-node publish.ts"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.14",
@@ -11,12 +11,15 @@
     "@babel/plugin-syntax-jsx": "^7.12.13",
     "@babel/plugin-transform-parameters": "^7.13.0",
     "@babel/preset-react": "^7.13.13",
+    "@octokit/core": "^3.3.2",
     "@types/degit": "^2.8.1",
     "@types/jsdom": "^16.2.9",
     "@types/node": "^14.14.37",
     "@types/react": "^17.0.3",
+    "axios": "^0.21.1",
     "babel-preset-minify": "^0.5.1",
     "degit": "^2.8.0",
+    "dotenv": "^8.2.0",
     "jsdom": "^16.5.2",
     "svg-to-jsx": "^1.0.3",
     "ts-node": "^9.1.1",

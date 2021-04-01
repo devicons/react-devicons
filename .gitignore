@@ -2,3 +2,5 @@ node_modules
 yarn-error.log
 tmp
 dist
+.env
+react-devicons.zip
