@@ -14,13 +14,13 @@ jobs:
       - name: Fetch release version
         run: |
           curl -sL https://api.github.com/repos/devicons/devicon/releases/latest | \
-          jq -r ".tag_name" > release-versions/swagger-ui-latest.txt
+          jq -r ".tag_name" > devicon-latest.txt
       - name: Check for modified files
         id: git-check
         run: echo ::set-output name=modified::$([ -z "`git status --porcelain`" ] && echo "false" || echo "true")
       - name: Save new version number
         id: save-version
-        run: cat ::set-output name=ver-number::release-versions/swagger-ui-latest.txt
+        run: cat ::set-output name=ver-number::devicon-latest.txt
   release:
     needs: check_version
     if: needs.jobs.outputs.is_new_version == 'true'
