@@ -21,6 +21,7 @@ jobs:
       - name: Save new version number
         id: save-version
         run: echo "::set-output name=ver-number::" && cat devicon-latest.txt
+      - run: echo ${{steps.git-check.outputs.modified}} && echo " -- " && echo ${{steps.save-version.outputs.ver-number}}
   release:
     needs: check_version
     if: needs.jobs.outputs.is_new_version == 'true'
