@@ -20,7 +20,7 @@ jobs:
         run: echo ::set-output name=modified::$([ -z "`git status --porcelain`" ] && echo "false" || echo "true")
       - name: Save new version number
         id: save-version
-        run: cat ::set-output name=ver-number::devicon-latest.txt
+        run: echo "::set-output name=ver-number::" && cat devicon-latest.txt
   release:
     needs: check_version
     if: needs.jobs.outputs.is_new_version == 'true'
