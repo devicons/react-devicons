@@ -21,3 +21,13 @@ import ReactOriginalIcon from "react-devicons/react/original";
 <GithubOriginalIcon size="2em" />
 <ReactOriginalIcon className="my-class" />
 ```
+
+### With color
+
+Icons that are only one color can be recolored like this
+
+```tsx
+import { DeviconPlainIcon } from "react-devicons";
+
+<DeviconPlainIcon color="white" />;
+```
