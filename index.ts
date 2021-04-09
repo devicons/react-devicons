@@ -38,8 +38,12 @@ interface ConfigEntry {
 
   await fsAsync.mkdir(`${__dirname}/tmp/dist`);
   await fsAsync.copyFile(
-    `${__dirname}/package.json`,
-    `${__dirname}/tmp/dist/package.json`
+    `${__dirname}/readme.md`,
+    `${__dirname}/tmp/dist/readme.md`
+  );
+  await fsAsync.copyFile(
+    `${__dirname}/readme.md`,
+    `${__dirname}/tmp/dist/readme.md`
   );
 
   await Promise.all(
@@ -68,19 +72,39 @@ interface ConfigEntry {
           svg.removeAttribute("width");
           svg.removeAttribute("height");
           svg.removeAttribute("xmlns:xlink");
+          const isPlain =
+            version.includes("plain") ||
+            version.includes("line") ||
+            !!entry.aliases.find(
+              (x) =>
+                x.base == version &&
+                (x.alias.includes("plain") || x.alias.includes("line"))
+            );
+          if (isPlain) {
+            svg.removeAttribute("fill");
+            const elements = svg.getElementsByTagName("*");
+            for (let i = 0; i < elements.length; i++) {
+              const element = elements[i];
+              element.removeAttribute("fill");
+            }
+          }
           await fsAsync.writeFile(
             `${dir}/index.js`,
             `const React = require("react");
-module.exports = function ${reactName}({size = "1em",...props}){
+module.exports = function ${reactName}({size = "1em", ${
+              isPlain ? `color = "${entry.color}",` : ""
+            } ...props}){
   props = {
     ...props,
-    style: props.style ? {
-      ...props.style,
+    style: {
+      ...(props.style ? props.style : {}),
       width: size,
-      height: size
-    } : {
-      width: size,
-      height: size
+      height: size,${
+        isPlain
+          ? `
+      ...(color ? { fill: color } : {} )`
+          : ""
+      }
     }
   }
   return (${(await svgtojsx(svg.outerHTML)).replace(
@@ -91,7 +115,12 @@ module.exports = function ${reactName}({size = "1em",...props}){
           );
           const definitions = `import React from "react";
 interface Props extends React.SVGProps<SVGElement> {
-  size?: number | string;
+  size?: number | string;${
+    isPlain
+      ? `
+  color?: string;`
+      : ""
+  }
 }
 declare const ${reactName}: React.FunctionComponent<Props>;
 export default ${reactName};`;
