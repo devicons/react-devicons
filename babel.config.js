@@ -1,0 +1,4 @@
+module.exports = {
+  presets: ["@babel/preset-react", "babel-preset-minify"],
+  plugins: ["@babel/plugin-transform-parameters"],
+};
