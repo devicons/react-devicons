@@ -13,6 +13,7 @@ function exec(command: string) {
 }
 
 dotenv.config();
+console.log(process.env.NPM_TOKEN);
 console.log(process.env.GITHUB_TOKEN);
 const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
 
