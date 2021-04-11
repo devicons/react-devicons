@@ -29,21 +29,20 @@ const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
     })
   ).data.tag_name.replace("v", "");
 
-  await fsAsync.writeFile(
-    ".npmrc",
-    `//registry.npmjs.org/:_authToken=${process.env.NPM_TOKEN}`
-  );
-
   if (deviconVersion != currentVersion) {
     console.log(
       `New version available (${currentVersion} -> ${deviconVersion})`
     );
     console.log(" - Building");
     await exec("yarn build");
-    console.log(" - Publishing");
-    await exec(
-      `yarn --cwd dist publish --non-interactive --new-version ${deviconVersion}`
-    );
+    // console.log(" - Publishing");
+    // await fsAsync.writeFile(
+    //   "dist/.npmrc",
+    //   `//registry.npmjs.org/:_authToken=${process.env.NPM_TOKEN}`
+    // );
+    // await exec(
+    //   `yarn --cwd dist publish --non-interactive --new-version ${deviconVersion}`
+    // );
     console.log(" - Creating github release");
     const release_id = (
       await octokit.request("POST /repos/{owner}/{repo}/releases", {

@@ -3,6 +3,9 @@ on:
   schedule:
     - cron: "0 10 * * *"
   push:
+env:
+  NPM_TOKEN: NPM_TOKEN
+  GITHUB_TOKEN: GITHUB_TOKEN
 jobs:
   publish:
     runs-on: ubuntu-latest
