@@ -42,8 +42,8 @@ interface ConfigEntry {
     `${__dirname}/tmp/dist/readme.md`
   );
   await fsAsync.copyFile(
-    `${__dirname}/readme.md`,
-    `${__dirname}/tmp/dist/readme.md`
+    `${__dirname}/package.json`,
+    `${__dirname}/tmp/dist/package.json`
   );
 
   await Promise.all(
