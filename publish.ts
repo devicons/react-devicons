@@ -42,7 +42,7 @@ const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
     await exec("yarn build");
     console.log(" - Publishing");
     await exec(
-      `yarn --cwd dist publish --non-interactive --new-version ${deviconVersion}`
+      `yarn publish dist --non-interactive --new-version ${deviconVersion}`
     );
     console.log(" - Creating github release");
     const release_id = (
