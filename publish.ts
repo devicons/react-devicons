@@ -13,8 +13,6 @@ function exec(command: string) {
 }
 
 dotenv.config();
-console.log(process.env.NPM_TOKEN);
-console.log(process.env.GITHUB_TOKEN);
 const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
 
 (async () => {
@@ -37,14 +35,14 @@ const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
     );
     console.log(" - Building");
     await exec("yarn build");
-    // console.log(" - Publishing");
-    // await fsAsync.writeFile(
-    //   "dist/.npmrc",
-    //   `//registry.npmjs.org/:_authToken=${process.env.NPM_TOKEN}`
-    // );
-    // await exec(
-    //   `yarn --cwd dist publish --non-interactive --new-version ${deviconVersion}`
-    // );
+    console.log(" - Publishing");
+    await fsAsync.writeFile(
+      "dist/.npmrc",
+      `//registry.npmjs.org/:_authToken=${process.env.NPM_TOKEN}`
+    );
+    await exec(
+      `yarn --cwd dist publish --non-interactive --new-version ${deviconVersion}`
+    );
     console.log(" - Creating github release");
     const release_id = (
       await octokit.request("POST /repos/{owner}/{repo}/releases", {
