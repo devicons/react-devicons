@@ -24,7 +24,7 @@ const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
   ).data.tag_name.replace("v", "");
   const currentVersion = (
     await octokit.request("GET /repos/{owner}/{repo}/releases/latest", {
-      owner: "maltejur",
+      owner: "devicons",
       repo: "react-devicons",
     })
   ).data.tag_name.replace("v", "");
@@ -47,14 +47,14 @@ const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
     console.log(" - Creating github release");
     const release_id = (
       await octokit.request("POST /repos/{owner}/{repo}/releases", {
-        owner: "maltejur",
+        owner: "devicons",
         repo: "react-devicons",
         tag_name: `v${deviconVersion}`,
       })
     ).data.id;
     await exec("zip react-devicons.zip dist -r");
     await axios({
-      url: `https://uploads.github.com/repos/maltejur/react-devicons/releases/${release_id}/assets?name=react-devicons.zip`,
+      url: `https://uploads.github.com/repos/devicons/react-devicons/releases/${release_id}/assets?name=react-devicons.zip`,
       data: Buffer.from(await fsAsync.readFile("./react-devicons.zip")),
       headers: {
         Authorization: `token ${process.env.GITHUB_TOKEN}`,
