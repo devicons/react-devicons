@@ -1,8 +1,9 @@
 name: Publish on NPM
 on:
-  schedule:
-    - cron: "0 10 * * *"
   push:
+    branches: [main]
+  repository_dispatch:
+    types: [publish]
 env:
   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
