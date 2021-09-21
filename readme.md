@@ -13,9 +13,9 @@ npm install --save react-devicons
 ## Usage
 
 ```tsx
-import { GithubOriginalIcon, GithubOriginalWordmarkIcon } from "react-devicons";
-// OR
 import ReactOriginalIcon from "react-devicons/react/original";
+// or (not recommended)
+import { GithubOriginalIcon, GithubOriginalWordmarkIcon } from "react-devicons";
 
 <GithubOriginalWordmarkIcon />
 <GithubOriginalIcon size="2em" />
@@ -27,7 +27,7 @@ import ReactOriginalIcon from "react-devicons/react/original";
 Icons that are only one color can be recolored like this
 
 ```tsx
-import { DeviconPlainIcon } from "react-devicons";
+import DeviconPlainIcon from "react-devicons/devicon/plain";
 
 <DeviconPlainIcon color="white" />;
 ```
