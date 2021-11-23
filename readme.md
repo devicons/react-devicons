@@ -14,7 +14,7 @@ npm install --save react-devicons
 
 ```tsx
 import ReactOriginalIcon from "react-devicons/react/original";
-// or (not recommended)
+// or (not recommended, this would increase bundle size by a lot)
 import { GithubOriginalIcon, GithubOriginalWordmarkIcon } from "react-devicons";
 
 <GithubOriginalWordmarkIcon />
