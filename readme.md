@@ -1,13 +1,16 @@
 # react-devicons
 
-React components for the svg icons of the [devicon](https://github.com/devicons/devicon) project.
+React components for the svg icons of the
+[devicon](https://github.com/devicons/devicon) project.
 
 ## Installation
 
 ```js
 yarn add react-devicons
 // OR
-npm install --save react-devicons
+npm i react-devicons
+// OR
+pnpm i react-devicons
 ```
 
 ## Usage
