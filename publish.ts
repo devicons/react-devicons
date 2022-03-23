@@ -39,10 +39,10 @@ const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
       `New version available (${currentVersion} -> ${deviconVersion})`
     );
     console.log(" - Building");
-    await exec("yarn build");
+    await exec("pnpm build");
     console.log(" - Publishing");
     await exec(
-      `yarn publish dist --non-interactive --new-version ${deviconVersion}`
+      `pnpm publish dist --non-interactive --new-version ${deviconVersion}`
     );
     console.log(" - Creating github release");
     const release_id = (

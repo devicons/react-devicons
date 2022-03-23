@@ -16,6 +16,6 @@ jobs:
         with:
           node-version: "14"
       - name: Install dependencies
-        run: yarn
+        run: pnpm
       - name: Run publish script
-        run: yarn release
+        run: pnpm release
