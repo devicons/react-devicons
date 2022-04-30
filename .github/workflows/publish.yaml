@@ -17,6 +17,8 @@ jobs:
           node-version: "14"
       - name: Setup PNPM
         uses: pnpm/action-setup@v2.2.1
+        with:
+          version: 6.32.11
       - name: Install dependencies
         run: pnpm
       - name: Run publish script
