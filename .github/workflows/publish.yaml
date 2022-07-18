@@ -20,6 +20,6 @@ jobs:
         with:
           version: 6.32.11
       - name: Install dependencies
-        run: pnpm
+        run: pnpm i
       - name: Run publish script
         run: pnpm release
