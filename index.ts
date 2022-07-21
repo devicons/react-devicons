@@ -55,7 +55,15 @@ interface ConfigEntry {
             `${__dirname}/tmp/devicon/icons/${entry.name}/${name}.svg`
           );
           const optimizedIcon = svgo.optimize(icon, {
-            plugins: ["removeStyleElement"],
+            plugins: [
+              {
+                name: "inlineStyles",
+                params: {
+                  onlyMatchedOnce: false,
+                },
+              },
+              "removeStyleElement",
+            ],
           }) as svgo.OptimizedSvg;
           const { document } = new JSDOM(optimizedIcon.data).window;
           const dir = `${__dirname}/tmp/dist/${entry.name}/${version}`;
@@ -112,10 +120,9 @@ module.exports = function ${reactName}({size = "1em", ${
       }
     }
   }
-  return (${(await svgtojsx(svg.outerHTML)).replace(
-    "<svg",
-    "<svg {...props}"
-  )});
+  return (${(
+    await svgtojsx(svg.outerHTML)
+  ).replace("<svg", "<svg {...props}")});
 }`
           );
           const definitions = `import React from "react";
