@@ -4,6 +4,7 @@ import fsAsync from "fs/promises";
 import { JSDOM } from "jsdom";
 import { exec } from "child_process";
 import svgtojsx from "svg-to-jsx";
+import svgo from "svgo";
 
 interface ConfigEntry {
   name: string;
@@ -28,9 +29,7 @@ interface ConfigEntry {
     fs.rmSync(`${__dirname}/dist`, { recursive: true });
   fsAsync.mkdir(`${__dirname}/tmp`);
 
-  await degit("https://github.com/devicons/devicon.git").clone(
-    `${__dirname}/tmp/devicon`
-  );
+  await degit("devicons/devicon").clone(`${__dirname}/tmp/devicon`);
 
   const deviconConfig: ConfigEntry[] = JSON.parse(
     (await fsAsync.readFile(`${__dirname}/tmp/devicon/devicon.json`)).toString()
@@ -55,7 +54,10 @@ interface ConfigEntry {
           const icon = await fsAsync.readFile(
             `${__dirname}/tmp/devicon/icons/${entry.name}/${name}.svg`
           );
-          const { document } = new JSDOM(icon).window;
+          const optimizedIcon = svgo.optimize(icon, {
+            plugins: ["removeStyleElement"],
+          }) as svgo.OptimizedSvg;
+          const { document } = new JSDOM(optimizedIcon.data).window;
           const dir = `${__dirname}/tmp/dist/${entry.name}/${version}`;
           const reactName =
             name
