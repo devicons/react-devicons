@@ -1,7 +1,5 @@
 name: Publish on NPM
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 env:
   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
